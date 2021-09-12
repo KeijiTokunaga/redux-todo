@@ -1,20 +1,19 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { count } from "console";
-import { title } from "process";
-import { useSelector } from "react-redux";
-import { RootState, AppThunk } from "../../app/store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AppThunk, RootState } from "../../app/store";
 
+// stateの型
 interface TaskState {
-  // taskが何個あるのか管理する
+  // taskが何個あるのか管理
   idCount: number;
-  // storeに保存するtaskの一覧
+  // storeに保存するtask一覧
   tasks: { id: number; title: string; completed: boolean }[];
-  // task のtitleを編集する歳にどのtaskが選択されているか
+  // taskのtitleを編集する際にどのtaskが選択されているか
   selectedTask: { id: number; title: string; completed: boolean };
   // Modalを開くか閉じるかのフラグ
   isModalOpen: boolean;
 }
 
+// stateの初期値
 const initialState: TaskState = {
   idCount: 1,
   tasks: [{ id: 1, title: "Task A", completed: false }],
@@ -23,9 +22,11 @@ const initialState: TaskState = {
 };
 
 export const taskSlice = createSlice({
+  // このsliceの名前。actionTypeを生成するときにprefixとなる。
   name: "task",
+  // このsliceで用いるinitialStateの値
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
+  // reducersの中身を記述
   reducers: {
     // taskの作成
     createTask: (state, action) => {
@@ -42,6 +43,8 @@ export const taskSlice = createSlice({
 
 export const { createTask } = taskSlice.actions;
 
+// コンポーネント側からuseSlectorを用いてselectTaskを指定することで
+// stateの値をコンポーネントに渡すことが可能
 export const selectTask = (state: RootState): TaskState["tasks"] =>
   state.task.tasks;
 
