@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../app/store";
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 // stateの型
 interface TaskState {
@@ -38,10 +38,18 @@ export const taskSlice = createSlice({
       };
       state.tasks = [newTask, ...state.tasks];
     },
+    // taskの消去
+    deleteTask: (state, action) => {
+      state.idCount--;
+      state.tasks = state.tasks.filter((item) => {
+        return item.id !== action.payload;
+      });
+      console.log(action.payload);
+    },
   },
 });
 
-export const { createTask } = taskSlice.actions;
+export const { createTask, deleteTask } = taskSlice.actions;
 
 // コンポーネント側からuseSlectorを用いてselectTaskを指定することで
 // stateの値をコンポーネントに渡すことが可能

@@ -4,12 +4,18 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import styles from "./TaskItem.module.scss";
-
+import { useDispatch } from "react-redux";
+import { deleteTask } from "../taskSlice";
 interface PropTypes {
   task: { id: number; title: string; completed: boolean };
 }
 
 const TaskItem: React.FC<PropTypes> = ({ task }) => {
+  const dispatch = useDispatch();
+  const handleDelete = (data: number) => {
+    dispatch(deleteTask(data));
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.title}>
@@ -29,7 +35,7 @@ const TaskItem: React.FC<PropTypes> = ({ task }) => {
           <EditIcon className={styles.icon} />
         </button>
         <button
-          onClick={() => console.log(`delete ${task.id}`)}
+          onClick={() => handleDelete(task.id)}
           className={styles.delete_button}
         >
           <DeleteIcon className={styles.icon} />
