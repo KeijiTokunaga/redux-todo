@@ -4,12 +4,17 @@ import { useForm } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import { createTask } from "../taskSlice";
 import styles from "./TaskForm.module.scss";
+import { dividerClasses } from "@mui/material";
 
 type Inputs = {
   taskTitle: string;
 };
 
-const TaskForm: React.FC = () => {
+type PropTypes = {
+  edit?: boolean;
+};
+
+const TaskForm: React.FC<PropTypes> = ({ edit }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm<Inputs>();
   const handleCreate = (data: Inputs) => {
@@ -22,11 +27,21 @@ const TaskForm: React.FC = () => {
       <form onSubmit={handleSubmit(handleCreate)} className={styles.form}>
         <TextField
           id="outlined-basic"
-          label="New Task"
+          label={edit ? "Edit Task" : "New Task"}
           variant="outlined"
           className={styles.text_field}
           {...register("taskTitle")}
         />
+        {edit ? (
+          <div className={styles.button_wrapper}>
+            <button type="submit" className={styles.submit_button}>
+              Submit
+            </button>
+            <button type="button" className={styles.cancel_button}>
+              Cancel
+            </button>
+          </div>
+        ) : null}
       </form>
     </div>
   );

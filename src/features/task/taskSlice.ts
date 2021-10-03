@@ -46,14 +46,28 @@ export const taskSlice = createSlice({
       });
       console.log(action.payload);
     },
+    selectTask: (state, action) => {
+      state.selectedTask = action.payload;
+    },
+    handleModalOpen: (state, action) => {
+      state.isModalOpen = action.payload;
+    },
   },
 });
 
-export const { createTask, deleteTask } = taskSlice.actions;
+export const { createTask, deleteTask, handleModalOpen, selectTask } =
+  taskSlice.actions;
 
 // コンポーネント側からuseSlectorを用いてselectTaskを指定することで
 // stateの値をコンポーネントに渡すことが可能
-export const selectTask = (state: RootState): TaskState["tasks"] =>
+export const selectTasks = (state: RootState): TaskState["tasks"] =>
   state.task.tasks;
+
+export const selectSelectedTask = (
+  state: RootState
+): TaskState["selectedTask"] => state.task.selectedTask;
+
+export const selectIsModalOpen = (state: RootState): TaskState["isModalOpen"] =>
+  state.task.isModalOpen;
 
 export default taskSlice.reducer;
