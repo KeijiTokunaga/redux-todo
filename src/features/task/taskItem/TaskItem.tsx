@@ -10,13 +10,13 @@ import TaskForm from "../taskForm/TaskForm";
 import { useDispatch, useSelector } from "react-redux";
 import { handleModalOpen, selectIsModalOpen, selectTask } from "../taskSlice";
 interface PropTypes {
-  task: { id: number; title: string; completed: boolean };
+  task: { id: string; title: string; completed: boolean };
 }
 
 const TaskItem: React.FC<PropTypes> = ({ task }) => {
   const isModalOpen = useSelector(selectIsModalOpen);
   const dispatch = useDispatch();
-  const handleDelete = (data: number) => {
+  const handleDelete = (data: string) => {
     dispatch(deleteTask(data));
   };
 
